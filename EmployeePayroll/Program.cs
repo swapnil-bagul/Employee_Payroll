@@ -6,8 +6,10 @@ namespace EmployeePayroll
     {
         static void Main(string[] args)
         {
-           
+            EmployeeRepository employeeRepository = new EmployeeRepository();
+            employeeRepository.GetEmployeeAllDeatils();
             Console.WriteLine("Hello World!");
+            Console.ReadLine();
         }
     }
 }
