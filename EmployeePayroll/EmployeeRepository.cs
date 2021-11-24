@@ -91,6 +91,79 @@ namespace EmployeePayroll
                 sqlconnection.Close();
             }
         }
+        public void UpdateEmployeeDetails(EmployeeModel model )
+        {
+            try
+            {
+                using (this.sqlconnection)
+                {
+                    SqlCommand command = new SqlCommand("dbo.spUpdateEmployeeDetails", this.sqlconnection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.EmplyeeName);
+                    command.Parameters.AddWithValue("@BasePay", model.Salary);
+                    //command.Parameters.AddWithValue("@StartDate", model.Startdate);
+                    //command.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlconnection.Open();
+                    var result = command.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        Console.WriteLine("No Data Updated");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee Data Updated");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlconnection.Close();
+            }
+
+        }
+
+        public void DeleteEmplyeeContact(EmployeeModel model)
+        {
+            try
+            {
+                using (this.sqlconnection)
+                {
+                    SqlCommand command = new SqlCommand("dbo.spDeleteEmployeeDetail", this.sqlconnection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.EmplyeeName);
+                    command.Parameters.AddWithValue("@Id", model.EmplyeeID );
+                    //command.Parameters.AddWithValue("@BasePay", model.Salary);
+                    //command.Parameters.AddWithValue("@StartDate", model.Startdate);
+                    //command.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlconnection.Open();
+                    var result = command.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        Console.WriteLine("No Data Deleted");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee Data Deleted");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlconnection.Close();
+            }
+
+        }
     }
+
 
 }

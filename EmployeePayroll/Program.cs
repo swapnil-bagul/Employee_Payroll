@@ -11,10 +11,11 @@ namespace EmployeePayroll
            // employeeRepository.GetEmployeeAllDeatils();
            //Console.WriteLine("Hello World!");
             model.EmplyeeName = "Omkar";
-            model.Startdate = DateTime.Now;
-            model.Gender = 'M';
-            model.Salary = 43566.32;
-            employeeRepository.AddEmployee(model);
+            //model.Startdate = DateTime.Now;
+            // model.Gender = 'M';
+            model.EmplyeeID = 7;
+           // model.Salary = 55320.32;
+            employeeRepository.DeleteEmplyeeContact(model);
             Console.ReadLine();
         }
     }
