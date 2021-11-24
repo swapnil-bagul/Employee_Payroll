@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
-
+using System.Data;
 
 namespace EmployeePayroll
 {
@@ -14,10 +14,10 @@ namespace EmployeePayroll
         {
             string query = @"select * from Employee_Payroll";
             //command object for excuting query against database
-            SqlCommand sqlCommand = new SqlCommand(query, sqlconnection);
+            SqlCommand command = new SqlCommand(query, sqlconnection);
             sqlconnection.Open();
             //excuting command object
-            SqlDataReader reader = sqlCommand.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
             EmployeeModel employeeModel = new EmployeeModel();
             if(reader .HasRows )
             {
@@ -55,5 +55,42 @@ namespace EmployeePayroll
                 Console.WriteLine("No data Found");
             }
         }
+
+        //Adding New Details in row
+        public void AddEmployee(EmployeeModel model)
+        {
+            try
+            {
+                using (this.sqlconnection )
+                {
+                    SqlCommand command = new SqlCommand("dbo.spAddEmployeeDetails",this.sqlconnection );
+                    command.CommandType =CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.EmplyeeName);
+                    command.Parameters.AddWithValue("@BasePay", model.Salary);
+                    command.Parameters.AddWithValue("@StartDate", model.Startdate );
+                    command.Parameters.AddWithValue("@Gender", model.Gender );
+                    sqlconnection.Open();
+                    var result = command.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        Console.WriteLine("No Data Added");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Employee Data Added");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                sqlconnection.Close();
+            }
+        }
     }
+
 }
